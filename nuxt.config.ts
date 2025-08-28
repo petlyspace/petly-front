@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ['~/assets/css/tailwind.css'],
   build: {
     transpile: ['shadcn-vue'],
