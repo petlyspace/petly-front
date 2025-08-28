@@ -1,0 +1,23 @@
+node_modules
+.output
+.nuxt
+dist
+
+# логи и мусор
+*.log
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# git
+.git
+.gitignore
+.github
+.husky
+
+# docker
+Dockerfile
+.dockerignore
+
+# тесты
+coverage
