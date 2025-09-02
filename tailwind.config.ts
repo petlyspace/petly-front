@@ -9,6 +9,7 @@ export default {
     './plugins/**/*.{js,ts,vue}',
     './nuxt.config.{js,ts}',
     './node_modules/shadcn-vue/**/*.{js,ts,vue}',
+    './node_modules/radix-vue/**/*.{js,ts,vue}',
   ],
   theme: {
     extend: {},
