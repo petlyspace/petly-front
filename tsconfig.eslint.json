@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "components/**/*.vue",
+    "store/**/*.ts",
+    "nuxt.config.ts",
+    "tailwind.config.ts",
+    "app.vue"
+  ]
+}
