@@ -6,21 +6,34 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build & Push Docker image
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/petly-front:latest
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SERVER_HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: root
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
           script: |
-            cd /opt/petly-front
-            git config pull.rebase false
-            git pull origin main
-            docker compose stop frontend
-            docker compose rm -f frontend
-            docker rmi $(docker images -q --filter=reference='*frontend*') || true
-            docker compose up -d --build --pull always frontend
+            cd /opt/petly
+            docker compose pull front
+            docker compose up -d front
+            docker exec nginx nginx -s reload || true
