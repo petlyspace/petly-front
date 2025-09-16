@@ -5,9 +5,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Копируем env внутрь (если нужен для билда)
-COPY .env ./.env
-
 COPY . .
 RUN npm run build
 
